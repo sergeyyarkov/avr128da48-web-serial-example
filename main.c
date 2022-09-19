@@ -41,6 +41,7 @@ int main(void) {
 
   command_define(led_toggle, "led_toggle");
   command_define(hello_world, "hello");
+  command_define(command_list, "list");
 
   while (1) {
   }

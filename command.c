@@ -33,8 +33,20 @@ uint8_t command_process(char *cmd_name) {
       return 0;
     }
   } while (i++ < COMMAND_SIZE);
-  
+
   USART1_SendString("[LOG]: Invalid command name!\n");
 
   return 1;
+}
+
+void command_list(void) {
+  USART1_SendString("[LOG]: List of available commands:\n");
+  for (uint8_t i = 0; i < COMMAND_SIZE; i++) {
+    if (commands[i].addr) {
+      USART1_SendChar((i + 1) + '0');
+      USART1_SendString(". ");
+      USART1_SendString(commands[i].name);
+      USART1_SendChar('\n');
+    }
+  }
 }
