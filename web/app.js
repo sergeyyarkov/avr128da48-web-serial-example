@@ -1,12 +1,15 @@
 class SerialPortHandler {
-  constructor(options) {
+  constructor(options, onConnect, onDisconnect) {
     this.encoder = new TextEncoder();
     this.decoder = new TextDecoder();
+    this.onConnect = onConnect;
+    this.onDisconnect = onDisconnect;
     this.options = options;
     this.port = null;
     this.writer = null;
     this.reader = null;
     this.isOpened = false;
+    this.#setupListeners();
   }
 
   async open() {
@@ -36,19 +39,24 @@ class SerialPortHandler {
 
   async write(data) {
     const encoded = this.encoder.encode(data);
-    return await this.writer.write(encoded);
+    await this.writer.write(encoded);
   }
 
   async read() {
-    let data = '';
     while (true) {
       const { value, done } = await this.reader.read();
       if (done) {
         this.reader.releaseLock();
         break;
       }
-      data += this.decoder.decode(value);
-      console.log(data);
+      console.log(this.decoder.decode(value));
+    }
+  }
+
+  #setupListeners() {
+    if ('serial' in navigator) {
+      navigator.serial.addEventListener('connect', this.onConnect);
+      navigator.serial.addEventListener('disconnect', this.onDisconnected);
     }
   }
 }
@@ -61,7 +69,14 @@ const $status = document.getElementById('status');
 const $vendorId = document.getElementById('vendorId');
 const $productId = document.getElementById('productId');
 
-const serialPortHandler = new SerialPortHandler({ baudRate: 9600 });
+const onConnected = (e) => console.log('device inserted!');
+const onDisconnected = (e) => console.log('device ejected!');
+
+const serialPortHandler = new SerialPortHandler(
+  { baudRate: 9600 },
+  onConnected,
+  onDisconnected
+);
 
 async function onConnect() {
   try {
