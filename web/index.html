@@ -4,10 +4,39 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Web Serial API Example</title>
+    <link href="./style.css" rel="stylesheet" />
     <script defer src="./app.js"></script>
   </head>
   <body>
-    <button id="MCU_connect">Connect</button>
+    <div class="app">
+      <div>
+        <button id="connect">Connect</button>
+        <button id="disconnect">Disconnect</button>
+      </div>
+      <form id="terminal_form" action="#">
+        <label for="terminal">Enter command name:</label><br />
+        <div class="flex">
+          <input
+            id="input"
+            name="input"
+            placeholder="e.g led_toggle"
+            type="text"
+            disabled
+          />
+          <button type="submit">Send</button>
+        </div>
+      </form>
+      <textarea id="serial_log" placeholder=">" readonly></textarea>
+      <div id="port_info">
+        <div>
+          <p id="status">not connected</p>
+        </div>
+        <div>
+          <span>vendorId: <span id="vendorId">-</span>&nbsp;|</span>
+          <span>deviceId: <span id="productId">-</span></span>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

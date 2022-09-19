@@ -1,0 +1,93 @@
+:root {
+  --border-color: #c9d1d9;
+  --border-color-hover: #6e7681;
+  --font-family: monospace;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  /* padding: 20px; */
+  width: 100%;
+  max-width: 600px;
+  row-gap: 5px;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  font-family: var(--font-family);
+}
+
+p {
+  padding: 0;
+  margin: 5px;
+}
+
+input,
+textarea {
+  font-family: var(--font-family);
+  padding: 5px 15px;
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid var(--border-color);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 200px;
+  font-size: 16px;
+  outline: none;
+  font-size: 12px;
+}
+
+label {
+  font-size: 14px;
+  font-style: italic;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  font-family: var(--font-family);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 5px 15px;
+}
+
+button:hover {
+  border: 1px solid var(--border-color-hover);
+}
+
+#terminal_form div {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+#port_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+#port_info #status {
+  text-transform: uppercase;
+}
