@@ -30,11 +30,13 @@ uint8_t command_process(char *cmd_name) {
       execute = commands[i].addr;
       execute();
       USART1_SendString("[LOG]: Command completed successfully with code \"0\".\n");
+      USART1_SendChar(EOT);
       return 0;
     }
   } while (i++ < COMMAND_SIZE);
 
   USART1_SendString("[LOG]: Invalid command name!\n");
+  USART1_SendChar(EOT);
 
   return 1;
 }

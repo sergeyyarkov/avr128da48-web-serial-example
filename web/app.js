@@ -6,8 +6,6 @@ class SerialPortHandler {
     this.onDisconnect = onDisconnect;
     this.options = options;
     this.port = null;
-    this.writer = null;
-    this.reader = null;
     this.isOpened = false;
     this.#setupListeners();
   }
@@ -19,8 +17,6 @@ class SerialPortHandler {
         await port.open(this.options);
 
         this.port = port;
-        this.writer = port.writable.getWriter();
-        this.reader = port.readable.getReader();
         this.isOpened = true;
 
         return this.port.getInfo();
@@ -35,22 +31,33 @@ class SerialPortHandler {
 
   async close() {
     await this.port.close();
+    this.isOpened = false;
   }
 
   async write(data) {
+    const writer = this.port.writable.getWriter();
     const encoded = this.encoder.encode(data);
-    await this.writer.write(encoded);
+    await writer.write(encoded);
+    writer.releaseLock();
   }
 
   async read() {
+    const reader = this.port.readable.getReader();
+    const chunks = [];
     while (true) {
-      const { value, done } = await this.reader.read();
-      if (done) {
-        this.reader.releaseLock();
+      const { value, done } = await reader.read();
+      const decoded = this.decoder.decode(value);
+
+      chunks.push(decoded);
+
+      if (done || decoded.includes('\u0004')) {
+        console.log('done');
+        reader.releaseLock();
         break;
       }
-      console.log(this.decoder.decode(value));
     }
+
+    return chunks.join('');
   }
 
   #setupListeners() {
@@ -80,9 +87,9 @@ const serialPortHandler = new SerialPortHandler(
 
 async function onConnect() {
   try {
+    if (serialPortHandler.isOpened) return;
     const info = await serialPortHandler.open();
-    console.log('Device connected: ', info);
-    console.log(serialPortHandler.port);
+    console.log('Port opened: ', info);
     $terminalForm.elements.input.removeAttribute('disabled');
     $vendorId.textContent = '0x' + info.usbVendorId.toString(16);
     $productId.textContent = '0x' + info.usbProductId.toString(16);
@@ -93,6 +100,7 @@ async function onConnect() {
 }
 
 async function onDisconnect() {
+  if (!serialPortHandler.isOpened) return;
   await serialPortHandler.close();
   $vendorId.textContent = '-';
   $productId.textContent = '-';
@@ -104,10 +112,15 @@ async function onSend(e) {
   const $form = e.target;
   const data = $form.elements.input.value;
   $form.reset();
-  if (serialPortHandler.isOpened) {
+  if (serialPortHandler.isOpened && data) {
+    $serialLog.innerHTML += data + '\n';
     await serialPortHandler.write(data + '\n');
-    await serialPortHandler.read();
+    const message = await serialPortHandler.read();
+    $serialLog.textContent += message;
+    $serialLog.textContent += '\n';
+    console.log(message);
   }
+  $serialLog.scrollTo(0, $serialLog.scrollHeight);
 }
 
 $connectButton.addEventListener('click', onConnect);
