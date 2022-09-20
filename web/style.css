@@ -10,7 +10,7 @@
   box-sizing: inherit;
 }
 
-.app {
+#app {
   display: flex;
   flex-direction: column;
   /* padding: 20px; */
