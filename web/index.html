@@ -15,16 +15,10 @@
         <button id="disconnect">Disconnect</button>
       </div>
       <form id="terminal_form" action="#">
-        <label for="terminal">Enter command name:</label><br />
-        <div class="flex">
-          <input
-            id="input"
-            name="input"
-            placeholder="e.g led_toggle"
-            type="text"
-            disabled
-          />
-          <button type="submit">Send</button>
+        <label for="input">Enter command name:</label><br />
+        <div>
+          <input id="input" name="input" placeholder="e.g led_toggle" type="text" disabled />
+          <button name="send" type="submit" disabled>Send</button>
         </div>
       </form>
       <textarea id="serial_log" placeholder=">" readonly></textarea>
@@ -33,8 +27,8 @@
           <p id="status">not connected</p>
         </div>
         <div>
-          <span>vendorId: <span id="vendorId">-</span>&nbsp;|</span>
-          <span>deviceId: <span id="productId">-</span></span>
+          <span>vendorId: <span id="vendor_id">-</span>&nbsp;|</span>
+          <span>deviceId: <span id="product_id">-</span></span>
         </div>
       </div>
     </div>

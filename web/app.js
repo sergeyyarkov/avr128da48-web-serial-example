@@ -26,8 +26,8 @@ class Application {
     this.$terminalForm = this.$root.querySelector('#terminal_form');
     this.$serialLog = this.$root.querySelector('#serial_log');
     this.$status = this.$root.querySelector('#status');
-    this.$vendorId = this.$root.querySelector('#vendorId');
-    this.$productId = this.$root.querySelector('#productId');
+    this.$vendorId = this.$root.querySelector('#vendor_id');
+    this.$productId = this.$root.querySelector('#product_id');
 
     this.#setupEvents();
   }
@@ -51,6 +51,7 @@ class Application {
       const info = await this.serialPortHandler.open();
       console.log('Port opened: ', info);
       this.$terminalForm.elements.input.removeAttribute('disabled');
+      this.$terminalForm.elements.send.removeAttribute('disabled');
       this.$vendorId.textContent = '0x' + info.usbVendorId.toString(16);
       this.$productId.textContent = '0x' + info.usbProductId.toString(16);
       this.$status.textContent = 'CONNECTED';
@@ -66,6 +67,8 @@ class Application {
   async #disconnectHandler() {
     if (!this.serialPortHandler.isOpened) return;
     await this.serialPortHandler.close();
+    this.$terminalForm.elements.input.setAttribute('disabled', 'true');
+    this.$terminalForm.elements.send.setAttribute('disabled', 'true');
     this.$vendorId.textContent = '-';
     this.$productId.textContent = '-';
     this.$status.textContent = 'NOT CONNECTED';

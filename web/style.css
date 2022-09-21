@@ -69,7 +69,7 @@ button {
   padding: 5px 15px;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   border: 1px solid var(--border-color-hover);
 }
 
