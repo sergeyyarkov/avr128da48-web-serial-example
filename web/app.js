@@ -11,7 +11,11 @@ class Application {
       return;
     }
 
-    this.serialPortHandler = new SerialPortHandler({ baudRate: 9600 });
+    this.serialPortHandler = new SerialPortHandler(
+      { baudRate: 9600 },
+      () => console.log('Device connected.'),
+      () => console.log('Device disconnected.')
+    );
 
     /**
      * DOM Elements
@@ -80,9 +84,8 @@ class Application {
       this.$serialLog.innerHTML += data + '\n';
       await this.serialPortHandler.write(data + '\n');
       const message = await this.serialPortHandler.read();
-      this.$serialLog.textContent += message;
-      this.$serialLog.textContent += '\n';
-      console.log(message);
+      this.$serialLog.textContent += message.replaceAll(EOT, '');
+      console.log('Message received: \n' + message);
     }
     this.$serialLog.scrollTo(0, this.$serialLog.scrollHeight);
   }
@@ -130,13 +133,14 @@ class SerialPortHandler {
   async read() {
     const reader = this.port.readable.getReader();
     let chunks = '';
+
     while (true) {
       const { value, done } = await reader.read();
       const decoded = this.decoder.decode(value);
 
       chunks += decoded;
 
-      if (done || decoded.includes('\u0004')) {
+      if (done || decoded.includes(EOT)) {
         console.log('Reading done.');
         reader.releaseLock();
         break;
@@ -148,7 +152,7 @@ class SerialPortHandler {
 
   #setupListeners() {
     navigator.serial.addEventListener('connect', this.onConnect);
-    navigator.serial.addEventListener('disconnect', this.onDisconnected);
+    navigator.serial.addEventListener('disconnect', this.onDisconnect);
   }
 }
 
