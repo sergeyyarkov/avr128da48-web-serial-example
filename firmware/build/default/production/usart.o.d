@@ -1,5 +1,6 @@
 build/default/production/usart.o.d build/default/production/usart.o: \
- usart.c usart.h /opt/microchip/xc8/v2.36/avr/avr/include/avr/io.h \
+ usart.c usart.h constants.h \
+ /opt/microchip/xc8/v2.36/avr/avr/include/avr/io.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/avr/sfr_defs.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/inttypes.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/features.h \
@@ -17,6 +18,8 @@ build/default/production/usart.o.d build/default/production/usart.o: \
  /opt/microchip/xc8/v2.36/avr/avr/include/string.h
 
 usart.h:
+
+constants.h:
 
 /opt/microchip/xc8/v2.36/avr/avr/include/avr/io.h:
 

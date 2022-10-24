@@ -10,7 +10,7 @@ uint8_t command_define(void *fp, char name[COMMAND_MAX_NAME_LENGTH]) {
     return 0;
   }
 
-  if (cmd_idx >= COMMAND_SIZE) {
+  if (cmd_idx > COMMAND_SIZE) {
     cmd_idx = 0;
   }
 

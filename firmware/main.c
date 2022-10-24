@@ -1,12 +1,10 @@
-#define F_CPU           (4000000UL)
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include <string.h>
+#include "constants.h"
 #include "command.h"
 #include "usart.h"
-
-#define BUFFER_SIZE     20
+#include <util/delay.h>
 
 char buffer[BUFFER_SIZE];
 volatile uint8_t buff_idx = 0;
@@ -17,6 +15,10 @@ void hello_world(void);
 ISR(USART1_RXC_vect) {
   char c;
   c = USART1.RXDATAL;
+
+  if (buff_idx > BUFFER_SIZE) {
+    buff_idx = 0;
+  }
 
   if (c != ' ' && c != '\n' && c != '\r') {
     buffer[buff_idx++] = c;

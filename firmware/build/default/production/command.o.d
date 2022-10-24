@@ -13,7 +13,7 @@ build/default/production/command.o.d build/default/production/command.o: \
  /opt/microchip/xc8/v2.36/avr/avr/include/avr/xmega.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/avr/fuse.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/avr/lock.h \
- /opt/microchip/xc8/v2.36/avr/avr/include/string.h usart.h \
+ /opt/microchip/xc8/v2.36/avr/avr/include/string.h usart.h constants.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/stdio.h
 
 command.h:
@@ -49,5 +49,7 @@ command.h:
 /opt/microchip/xc8/v2.36/avr/avr/include/string.h:
 
 usart.h:
+
+constants.h:
 
 /opt/microchip/xc8/v2.36/avr/avr/include/stdio.h:

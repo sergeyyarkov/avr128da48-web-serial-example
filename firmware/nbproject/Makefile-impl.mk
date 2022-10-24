@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=avr128da48_web-serial-example
+PROJECTNAME=firmware
 
 # Active Configuration
 DEFAULTCONF=default
