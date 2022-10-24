@@ -2,7 +2,6 @@
 
 #ifndef USART_H
 #define	USART_H
-#define BAUD_RATE   (9600)
 #define USART1_BAUD_RATE(BAUD_RATE) ((float)(64 * F_CPU / (16 * (float)BAUD_RATE)) + 0.5)
 
 #include <avr/io.h>
