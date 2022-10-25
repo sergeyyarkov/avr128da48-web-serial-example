@@ -4,7 +4,6 @@
 #include "constants.h"
 #include "command.h"
 #include "usart.h"
-#include <util/delay.h>
 
 char buffer[BUFFER_SIZE];
 volatile uint8_t buff_idx = 0;

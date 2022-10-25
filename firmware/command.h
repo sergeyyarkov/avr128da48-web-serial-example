@@ -4,7 +4,6 @@
 #include <avr/io.h>
 #include <string.h>
 
-#define EOT 0x04
 #define COMMAND_SIZE 5
 #define COMMAND_MAX_NAME_LENGTH 20
 

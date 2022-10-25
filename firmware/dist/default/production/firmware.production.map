@@ -431,12 +431,12 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000     0x4097
+.debug_info     0x0000000000000000     0x408e
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000     0x2c24 /opt/microchip/mplabx/v6.00/packs/Microchip/AVR-Dx_DFP/1.10.124/xc8/avr/lib/avrxmega4/memx-const/mapped/crtavr128da48.o
- .debug_info    0x0000000000002c24      0x828 build/default/production/main.o
- .debug_info    0x000000000000344c      0x6cf build/default/production/usart.o
- .debug_info    0x0000000000003b1b      0x57c build/default/production/command.o
+ .debug_info    0x0000000000002c24      0x81f build/default/production/main.o
+ .debug_info    0x0000000000003443      0x6cf build/default/production/usart.o
+ .debug_info    0x0000000000003b12      0x57c build/default/production/command.o
 
 .debug_abbrev   0x0000000000000000     0x2e21
  *(.debug_abbrev)

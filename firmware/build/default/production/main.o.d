@@ -15,10 +15,7 @@ build/default/production/main.o.d build/default/production/main.o: main.c \
  /opt/microchip/xc8/v2.36/avr/avr/include/avr/lock.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/avr/interrupt.h \
  /opt/microchip/xc8/v2.36/avr/avr/include/string.h constants.h command.h \
- usart.h /opt/microchip/xc8/v2.36/avr/avr/include/stdio.h \
- /opt/microchip/xc8/v2.36/avr/avr/include/util/delay.h \
- /opt/microchip/xc8/v2.36/avr/avr/include/util/delay_basic.h \
- /opt/microchip/xc8/v2.36/avr/avr/include/math.h
+ usart.h /opt/microchip/xc8/v2.36/avr/avr/include/stdio.h
 
 /opt/microchip/xc8/v2.36/avr/avr/include/avr/io.h:
 
@@ -59,9 +56,3 @@ command.h:
 usart.h:
 
 /opt/microchip/xc8/v2.36/avr/avr/include/stdio.h:
-
-/opt/microchip/xc8/v2.36/avr/avr/include/util/delay.h:
-
-/opt/microchip/xc8/v2.36/avr/avr/include/util/delay_basic.h:
-
-/opt/microchip/xc8/v2.36/avr/avr/include/math.h:

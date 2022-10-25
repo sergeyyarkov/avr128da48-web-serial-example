@@ -11,7 +11,7 @@ void USART1_Initialize(void) {
   PORTC.DIRSET = PIN0_bm;
   PORTC.DIRCLR = PIN1_bm;
 
-  /* enable reveice complete interrupt */
+  /* enable receive complete interrupt */
   USART1.CTRLA = USART_RXCIE_bm;
 
   /* enable transmitter and receiver */
