@@ -12,22 +12,9 @@ void led_toggle(void);
 void hello_world(void);
 
 ISR(USART1_RXC_vect) {
-  char c;
-  c = USART1.RXDATAL;
-
-  if (buff_idx > BUFFER_SIZE) {
-    buff_idx = 0;
-  }
-
-  if (c != ' ' && c != '\n' && c != '\r') {
-    buffer[buff_idx++] = c;
-  }
-
-  if (c == '\n') {
-    command_process(buffer);
-    buff_idx = 0;
-    memset(buffer, 0, strlen(buffer));
-  }
+  if (buff_idx > BUFFER_SIZE) buff_idx = 0;
+  buffer[buff_idx] = USART1.RXDATAL;
+  buff_idx++;
 }
 
 void MCU_Init_Ports(void) {
@@ -45,6 +32,13 @@ int main(void) {
   command_define(command_list, "list");
 
   while (1) {
+    if (buff_idx >= 1) {
+      if (buffer[buff_idx - 1] == '\n') {
+        buffer[buff_idx - 1] = '\0';
+        command_process(buffer);
+        buff_idx = 0;
+      }
+    }
   }
 }
 
