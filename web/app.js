@@ -14,7 +14,10 @@ class Application {
     this.serialPortHandler = new SerialPortHandler(
       { baudRate: 9600 },
       () => console.log('Device connected.'),
-      () => console.log('Device disconnected.')
+      () => {
+        console.log('Device disconnected.');
+        this.#disconnectHandler();
+      }
     );
 
     /**
@@ -134,23 +137,29 @@ class SerialPortHandler {
   }
 
   async read() {
-    const reader = this.port.readable.getReader();
-    let chunks = '';
+    while (this.port.readable) {
+      const reader = this.port.readable.getReader();
+      let chunks = '';
 
-    while (true) {
-      const { value, done } = await reader.read();
-      const decoded = this.decoder.decode(value);
+      try {
+        while (true) {
+          const { value, done } = await reader.read();
+          const decoded = this.decoder.decode(value);
 
-      chunks += decoded;
+          chunks += decoded;
 
-      if (done || decoded.includes(EOT)) {
-        console.log('Reading done.');
-        reader.releaseLock();
-        break;
+          if (done || decoded.includes(EOT)) {
+            console.log('Reading done.');
+            reader.releaseLock();
+            break;
+          }
+        }
+        return chunks;
+      } catch (error) {
+        console.error(error);
+        throw error;
       }
     }
-
-    return chunks;
   }
 
   #setupListeners() {
