@@ -158,6 +158,8 @@ class SerialPortHandler {
       } catch (error) {
         console.error(error);
         throw error;
+      } finally {
+        reader.releaseLock();
       }
     }
   }
