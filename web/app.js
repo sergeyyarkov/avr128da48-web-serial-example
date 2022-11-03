@@ -175,5 +175,7 @@ const app = new Application(document.getElementById('app'));
 setInterval(async () => {
   if (app.serialPortHandler.isOpened) {
     await app.serialPortHandler.write('led_toggle' + '\n');
+    const message = await app.serialPortHandler.read();
+    console.log(message);
   }
 }, 500);
