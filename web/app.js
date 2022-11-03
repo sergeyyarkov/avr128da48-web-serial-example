@@ -170,4 +170,10 @@ class SerialPortHandler {
   }
 }
 
-new Application(document.getElementById('app'));
+const app = new Application(document.getElementById('app'));
+
+setInterval(async () => {
+  if (app.serialPortHandler.isOpened) {
+    await app.serialPortHandler.write('led_toggle' + '\n');
+  }
+}, 500);
