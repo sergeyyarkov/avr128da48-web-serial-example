@@ -87,7 +87,7 @@ class Application {
     const data = $form.elements.input.value;
     $form.reset();
     if (this.serialPortHandler.isOpened && data) {
-      this.$serialLog.innerHTML += data + '\n';
+      this.$serialLog.innerHTML += '>' + data + '\n';
       await this.serialPortHandler.write(data + '\n');
       const message = await this.serialPortHandler.read();
       this.$serialLog.textContent += message.replaceAll(EOT, '');
